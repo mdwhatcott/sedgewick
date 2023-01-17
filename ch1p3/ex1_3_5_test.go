@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/mdwhatcott/go-collections/stack"
 	"github.com/mdwhatcott/testing/should"
+
+	"sedgewick/ll"
 )
 
 func TestExercise1_3_5(t *testing.T) {
@@ -19,12 +20,12 @@ func Bin(n int) (result string) {
 	if n == 0 {
 		return "0"
 	}
-	s := stack.New[string](0)
+	s := ll.NewStack[string]()
 	for n > 0 {
 		s.Push(fmt.Sprint(n % 2))
 		n /= 2
 	}
-	for !s.Empty() {
+	for !s.IsEmpty() {
 		result += s.Pop()
 	}
 	return result

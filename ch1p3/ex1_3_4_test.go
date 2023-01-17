@@ -4,9 +4,9 @@ import (
 	"testing"
 
 	"github.com/mdwhatcott/go-collections/set"
-	"github.com/mdwhatcott/go-collections/stack"
-
 	"github.com/mdwhatcott/testing/should"
+
+	"sedgewick/ll"
 )
 
 // TestExercise1_3_4: Write a stack client that reads
@@ -47,7 +47,7 @@ func ParenthesesBalanced(s string) bool {
 	if len(s)%2 != 0 {
 		return false
 	}
-	items := stack.New[rune](0)
+	items := ll.NewStack[rune]()
 	for _, c := range s {
 		if opens.Contains(c) {
 			items.Push(c)
@@ -57,5 +57,5 @@ func ParenthesesBalanced(s string) bool {
 			}
 		}
 	}
-	return items.Empty()
+	return items.IsEmpty()
 }

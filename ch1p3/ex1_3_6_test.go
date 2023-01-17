@@ -3,26 +3,32 @@ package ch1p3
 import (
 	"testing"
 
-	"github.com/mdwhatcott/go-collections/queue"
 	"github.com/mdwhatcott/go-collections/stack"
+
+	"sedgewick/ll"
 )
 
 func TestExercise1_3_6(t *testing.T) {
-	q := queue.New[int](0)
+	q := ll.NewQueue[int]()
 	for x := 0; x < 10; x++ {
 		q.Enqueue(x)
 	}
-	t.Log(q.Slice())
 	Reverse(q)
-	t.Log(q.Slice())
+	LogAll(t, q)
 }
 
-func Reverse[T comparable](q *queue.Queue[T]) {
+func Reverse[T comparable](q *ll.Queue[T]) {
 	s := stack.New[T](0)
-	for !q.Empty() {
+	for !q.IsEmpty() {
 		s.Push(q.Dequeue())
 	}
 	for !s.Empty() {
 		q.Enqueue(s.Pop())
+	}
+}
+
+func LogAll[T comparable](t *testing.T, q *ll.Queue[T]) {
+	for !q.IsEmpty() {
+		t.Log(q.Dequeue())
 	}
 }
