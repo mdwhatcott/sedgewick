@@ -1,7 +1,14 @@
 package ch2p2
 
+import (
+	"fmt"
+	"runtime/debug"
+	"strings"
+)
+
 func TopDownMergeSort[T LessThan](a []T) {
 	sortTopDown(a, make([]T, len(a)), 0, len(a)-1)
+	fmt.Printf("          %#v\n", a)
 }
 
 func sortTopDown[T LessThan](a, aux []T, lo, hi int) {
@@ -15,6 +22,8 @@ func sortTopDown[T LessThan](a, aux []T, lo, hi int) {
 }
 
 func merge[T LessThan](a, aux []T, lo, mid, hi int) {
+	depth := len(strings.Split(string(debug.Stack()), "\n"))
+	fmt.Printf("%03d merge(%#v, %#v, %#v, %#v, %#v)\n", depth, a, aux, lo, mid, hi)
 	L, R := lo, mid+1
 
 	for k := lo; k <= hi; k++ {
