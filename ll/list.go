@@ -1,43 +1,29 @@
 package ll
 
-type l[T any] struct {
+type Node[T any] struct {
 	Value T
-	Next  *l[T]
+	Next  *Node[T]
 }
 type List[T any] struct {
-	first *l[T]
-	n     int
+	Head *Node[T]
+	n    int
 }
 
 func NewList[T any]() *List[T]      { return new(List[T]) }
 func (this *List[T]) IsEmpty() bool { return this.n == 0 }
 func (this *List[T]) Len() int      { return this.n }
-func (this *List[T]) Insert(n int, value T) {
-	defer func() { this.n++ }()
-	item := this.first
-	for ; n > 0; n-- {
-		item = item.Next
-	}
-	if item == nil {
-		this.first = &l[T]{Value: value}
-	} else {
-		add := &l[T]{Value: value, Next: item.Next}
-		item.Next = add
-	}
+func (this *List[T]) Insert(value T) {
+	this.Head = &Node[T]{Value: value, Next: this.Head}
+	this.n++
 }
-func (this *List[T]) Pop(n int) T {
-	defer func() { this.n-- }()
-	if n == 0 {
-		value := this.first.Value
-		this.first = this.first.Next
-		return value
-	}
-	item := this.first
-	for n > 1 {
+func (this *List[T]) Slice() (result []T) {
+	return Slice(this.Head)
+}
+func Slice[T any](head *Node[T]) (result []T) {
+	item := head
+	for item != nil {
+		result = append(result, item.Value)
 		item = item.Next
-		n--
 	}
-	value := item.Next.Value
-	item.Next = item.Next.Next
-	return value
+	return result
 }
