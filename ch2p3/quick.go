@@ -1,7 +1,6 @@
 package ch2p3
 
 import (
-	"fmt"
 	"math/rand"
 
 	"sedgewick/util/generic"
@@ -20,31 +19,20 @@ func sort[T generic.LessThan](a []T, lo, hi int) {
 	sort(a, j+1, hi)
 }
 func partition[T generic.LessThan](a []T, lo, hi int) int {
-	fmt.Println(a)
 	i := lo
 	j := hi + 1
 	v := a[lo]
 	for {
-		for {
-			i++
-			if a[i] < v || i == hi {
-				break
-			}
+		for i++; a[i] < v && i != hi; i++ {
 		}
-		for {
-			j--
-			if v < a[j] || j == lo {
-				break
-			}
+		for j--; v < a[j] && j != lo; j-- {
 		}
 		if i >= j {
 			break
 		}
 		exchange(a, i, j)
-		fmt.Println(a)
 	}
 	exchange(a, lo, j)
-	fmt.Println(a)
 	return j
 }
 func exchange[T generic.LessThan](a []T, i, j int) {
