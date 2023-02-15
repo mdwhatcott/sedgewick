@@ -8,15 +8,15 @@ import (
 
 func QuickSort[T generic.LessThan](a []T) {
 	rand.Shuffle(len(a), func(i, j int) { exchange(a, i, j) })
-	sort(a, 0, len(a)-1)
+	quickSort(a, 0, len(a)-1)
 }
-func sort[T generic.LessThan](a []T, lo, hi int) {
+func quickSort[T generic.LessThan](a []T, lo, hi int) {
 	if hi <= lo {
 		return
 	}
 	j := partition(a, lo, hi)
-	sort(a, lo, j-1)
-	sort(a, j+1, hi)
+	quickSort(a, lo, j-1)
+	quickSort(a, j+1, hi)
 }
 func partition[T generic.LessThan](a []T, lo, hi int) int {
 	i := lo
@@ -36,5 +36,8 @@ func partition[T generic.LessThan](a []T, lo, hi int) int {
 	return j
 }
 func exchange[T generic.LessThan](a []T, i, j int) {
+	if i == j {
+		return
+	}
 	a[i], a[j] = a[j], a[i]
 }
